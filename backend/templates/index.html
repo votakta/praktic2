@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Детекция телефонов на экзаменах</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    
+<div class="container">
+    <h1> Детекция телефонов на экзаменах</h1>
+    <p class="subtitle">Загрузите фото экзаменационной аудитории — система найдет мобильные устройства</p>
+
+    <div class="upload-area">
+        <input type="file" id="imageInput" accept="image/*" />
+        <br />
+        <button class="btn" id="processBtn" onclick="processImage()">Обнаружить телефоны</button>
+        <span id="loadingText" class="loading" style="display:none;">Обработка...</span>
+    </div>
+
+    <div class="result-area" id="resultArea">
+        <h2 style="margin-bottom: 16px;"> Результат</h2>
+        <img id="resultImage" src="" alt="Результат обработки" />
+        <div id="stats"></div>
+    </div>
+
+    <div class="history-area">
+        <h2>История проверок</h2>
+        <ul id="historyList">
+            <li style="color:#a0aec0; justify-content:center;">Пока нет записей</li>
+        </ul>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
