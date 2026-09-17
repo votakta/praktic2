@@ -8,9 +8,8 @@
 </head>
 <body>
 
-    
 <div class="container">
-    <h1> Детекция телефонов на экзаменах</h1>
+    <h1>Детекция телефонов на экзаменах</h1>
     <p class="subtitle">Загрузите фото экзаменационной аудитории — система найдет мобильные устройства</p>
 
     <div class="upload-area">
@@ -21,7 +20,7 @@
     </div>
 
     <div class="result-area" id="resultArea">
-        <h2 style="margin-bottom: 16px;"> Результат</h2>
+        <h2>Результат</h2>
         <img id="resultImage" src="" alt="Результат обработки" />
         <div id="stats"></div>
     </div>
@@ -29,10 +28,9 @@
     <div class="history-area">
         <h2>История проверок</h2>
         <ul id="historyList">
-            <li style="color:#a0aec0; justify-content:center;">Пока нет записей</li>
+            <li>Пока нет записей</li>
         </ul>
     </div>
-
 </div>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>

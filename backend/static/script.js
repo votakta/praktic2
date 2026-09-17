@@ -41,15 +41,15 @@ async function processImage() {
         loadHistory();
 
     } catch (error) {
-        alert(' Ошибка: ' + error.message);
+        alert('Ошибка: ' + error.message);
     } finally {
-        //разблок кнопки
+        //разблокировка кнопки
         btn.disabled = false;
         loading.style.display = 'none';
     }
 }
 
-//результат
+//отображение результата
 function showResult(data) {
     const resultArea = document.getElementById('resultArea');
     const img = document.getElementById('resultImage');
@@ -60,15 +60,10 @@ function showResult(data) {
     img.src = `/static/results/${data.result_image}?${Date.now()}`;
 
     const count = data.phones_detected;
-    stats.innerHTML = `
-         Обнаружено телефонов: 
-        <strong style="font-size: 28px; color: ${count > 0 ? '#e53e3e' : '#48bb78'};">
-            ${count}
-        </strong>
-    `;
+    stats.innerHTML = `Обнаружено телефонов: <strong style="font-size: 28px; color: ${count > 0 ? '#e53e3e' : '#48bb78'};">${count}</strong>`;
 }
 
-//история
+//загрузка истории
 async function loadHistory() {
     try {
         const response = await fetch(`${API_BASE}/history`);
@@ -77,7 +72,7 @@ async function loadHistory() {
 
         //если история пуста
         if (history.length === 0) {
-            list.innerHTML = '<li style="color:#a0aec0; justify-content:center;">📭 История пуста</li>';
+            list.innerHTML = '<li style="color:#a0aec0; justify-content:center;">История пуста</li>';
             return;
         }
 
@@ -87,12 +82,8 @@ async function loadHistory() {
             const li = document.createElement('li');
             const date = new Date(item.timestamp).toLocaleString('ru-RU');
             li.innerHTML = `
-                <span>
-                    <strong>${date}</strong> — ${item.filename}
-                </span>
-                <span class="badge ${item.phones_detected === 0 ? 'zero' : ''}">
-                     ${item.phones_detected}
-                </span>
+                <span><strong>${date}</strong> — ${item.filename}</span>
+                <span class="badge ${item.phones_detected === 0 ? 'zero' : ''}">${item.phones_detected}</span>
             `;
             list.appendChild(li);
         });

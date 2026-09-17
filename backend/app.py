@@ -1,8 +1,10 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, make_response
 from flask_cors import CORS
 import cv2
 import os
 import sqlite3
+import csv
+import io
 from datetime import datetime
 from ultralytics import YOLO
 
@@ -99,6 +101,28 @@ def get_history():
         })
     
     return jsonify(history)
+    
+#генерация отчёта в CSV
+@app.route('/export/csv', methods=['GET'])
+def export_csv():
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM history ORDER BY id DESC')
+    rows = cursor.fetchall()
+    conn.close()
+    
+    #формирование CSV
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['ID', 'Дата и время', 'Файл', 'Телефонов', 'Результат'])
+    for row in rows:
+        writer.writerow(row)
+    
+    #возврат файла
+    response = make_response(output.getvalue())
+    response.headers['Content-Disposition'] = 'attachment; filename=history_report.csv'
+    response.headers['Content-type'] = 'text/csv; charset=utf-8'
+    return response
 
 #запуск сервера
 if __name__ == '__main__':
